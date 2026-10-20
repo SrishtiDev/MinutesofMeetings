@@ -1,0 +1,38 @@
+{
+  "meeting_date": "2026-10-20",
+  "expected_decisions": [
+    "Deploy to staging on Friday, October 23rd."
+  ],
+  "expected_action_items": [
+    {
+      "task": "Complete the REST API for the notifications module",
+      "owner": "Meera",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Integrate the notifications API into the frontend",
+      "owner": "Siddharth",
+      "deadline": "2026-10-23"
+    },
+    {
+      "task": "Investigate and fix the iOS Safari session token expiry bug",
+      "owner": "Arjun",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Update the API documentation in Confluence",
+      "owner": "Siddharth",
+      "deadline": "2026-10-30"
+    },
+    {
+      "task": "Write the regression test plan and share with the team",
+      "owner": "Kavya",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Send meeting summary and update the sprint board",
+      "owner": "Rohan",
+      "deadline": "2026-10-21"
+    }
+  ]
+}

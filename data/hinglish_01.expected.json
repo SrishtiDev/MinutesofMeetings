@@ -1,0 +1,40 @@
+{
+  "meeting_date": "2026-10-20",
+  "_date_resolution_notes": {
+    "kal tak": "2026-10-21 (meeting_date + 1 day)",
+    "agle Friday tak": "2026-10-23 (nearest Friday after 2026-10-20, which is a Tuesday)",
+    "parso tak": "2026-10-22 (meeting_date + 2 days)",
+    "agle hafte Wednesday tak": "2026-10-28 (next week's Wednesday)",
+    "ASAP / jaldi": "null — vague, not resolvable"
+  },
+  "expected_decisions": [
+    "PostgreSQL migration is deferred to v2. SQLite will be used in v1."
+  ],
+  "expected_action_items": [
+    {
+      "task": "Fix the edge case in session handling and complete the user profile API",
+      "owner": "Divya",
+      "deadline": "2026-10-21"
+    },
+    {
+      "task": "Complete the frontend UI for the profile page",
+      "owner": "Kabir",
+      "deadline": "2026-10-23"
+    },
+    {
+      "task": "Upload onboarding screen design assets to Figma",
+      "owner": "Sneha",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Write the full test plan for all modules",
+      "owner": "Tanveer",
+      "deadline": "2026-10-28"
+    },
+    {
+      "task": "Update the README file on GitHub",
+      "owner": null,
+      "deadline": null
+    }
+  ]
+}

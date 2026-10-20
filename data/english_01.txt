@@ -1,0 +1,43 @@
+Project Team Meeting — Sprint Planning
+Date: October 20, 2026
+Attendees: Arjun (Tech Lead), Meera (Backend Developer), Siddharth (Frontend Developer), Kavya (QA), Rohan (Project Manager)
+
+---
+
+Rohan: Alright everyone, let's get started. We have a lot to cover today. The main goal is to finalise the sprint plan and assign tasks before the client demo next week.
+
+Arjun: Before we jump in, I want to flag that the REST API for the notifications module is still not done. That's blocking Siddharth on the frontend side.
+
+Meera: Yes, I know. I got delayed because the database migration took longer than expected. I can finish the notifications API by Thursday.
+
+Rohan: Okay, please make sure that happens. Siddharth, once you have the API, how long do you need?
+
+Siddharth: If I get it Thursday, I can have the frontend integrated by end of day Friday.
+
+Rohan: Perfect. Let's also talk about the login bug. Kavya, you reported that the session token expires too early on mobile?
+
+Kavya: Yes, on iOS Safari it expires after around five minutes instead of thirty. It seems like a header configuration issue.
+
+Arjun: I'll look into that. Give me until Wednesday.
+
+Rohan: Okay. Now, a decision we need to make — are we deploying to staging on Friday or waiting until Monday? The client demo is next Tuesday.
+
+Arjun: Friday is safer. We'll have the whole weekend for smoke testing.
+
+Meera: Agreed.
+
+Rohan: Alright, decision made — we deploy to staging on Friday, October 23rd.
+
+Arjun: One more thing — someone needs to update the API documentation in Confluence. It's been out of date since the last sprint.
+
+Rohan: Can anyone take that?
+
+Siddharth: I can do it, but I'll need a couple of days after I'm done with the frontend integration.
+
+Rohan: That works. Let's say you get it done by end of next week.
+
+Kavya: I'll write the regression test plan and share it with the team. I'll try to have it ready by Wednesday as well.
+
+Rohan: Great. I'll send out the meeting summary and updated sprint board by tomorrow. I think that covers everything.
+
+---

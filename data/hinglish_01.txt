@@ -1,0 +1,43 @@
+Team Meeting — College Project App "CampusConnect"
+Date: 20 October 2026
+Attendees: Aryan (team lead), Divya (backend), Kabir (frontend), Sneha (design), Tanveer (testing)
+
+---
+
+Aryan: Okay yaar, sab aa gaye? Chalo shuru karte hain. Aaj ka main agenda hai — v1 release ke liye kya kya baki hai.
+
+Divya: Bhai, mera user profile API kal tak ready ho jayegi. Bas ek edge case fix karna hai session handling mein.
+
+Aryan: Perfect. Kabir, profile page ka UI tune kar raha hai?
+
+Kabir: Haan, lekin Divya ka API mile toh baaki kaam agle Friday tak complete ho jayega. Abhi maine mockup se kaam chal raha hai.
+
+Aryan: Theek hai. Sneha, design assets kaafi time se pending hain — new onboarding screens ke liye.
+
+Sneha: Sorry yaar, college fest ke chakkar mein delay ho gaya. Main parso tak sab Figma pe upload kar deti hoon, promise.
+
+Aryan: Theek hai. Tanveer, testing plan ka kya scene hai?
+
+Tanveer: Abhi maine test cases sirf login module ke liye likhe hain. Baaki modules ke liye jaldi kar leta hoon — ASAP ho jayega.
+
+Aryan: ASAP se kuch nahi hoga bhai, ek proper date do.
+
+Tanveer: Okay okay. Agle hafte Wednesday tak pura test plan ready kar deta hoon.
+
+Aryan: That's better. Ab ek important decision — kya hum SQLite se PostgreSQL migrate karein v1 mein, ya v2 ke liye chhodein?
+
+Divya: V1 mein bilkul nahi. Bahut kaam hai abhi. PostgreSQL v2 mein karte hain.
+
+Kabir: Agreed, v2 mein.
+
+Sneha: Mujhe zyada pata nahi database ka, tum log decide karo.
+
+Aryan: Theek hai, toh final decision — PostgreSQL migration v2 ke liye. V1 mein SQLite hi rahega.
+
+Aryan: One more thing — README file update karni hai, GitHub pe ekdum outdated hai. Koi karega?
+
+Kabir: Main kar lunga, but time nahi hai abhi. Baad mein dekhte hain.
+
+Aryan: Okay, chal abhi ke liye skip karte hain. Next meeting Thursday ko — Divya ke API ke baad status check karenge.
+
+---
