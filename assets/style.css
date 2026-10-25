@@ -1,0 +1,271 @@
+/* assets/style.css — MeetMinutes AI look and feel.
+   Colours and radii come from assets/tokens.css (loaded next to this file).
+   Fonts are free Google Fonts stand-ins for the paid ones in design/DESIGN.md:
+     Newsreader        -> headlines (P22 Mackinac Pro)
+     Plus Jakarta Sans -> body      (Sofia Pro)
+     IBM Plex Mono     -> labels    (IBM Plex Mono) */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+/* ---------- Font stacks (short names used below) ---------- */
+:root {
+  --font-head: 'Newsreader', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-label: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---------- Page canvas and width ---------- */
+.stApp {
+  background: var(--color-paper-white);
+  color: var(--color-charcoal-navy);
+  font-family: var(--font-body);
+}
+.stApp button, .stApp input, .stApp textarea, .stApp select {
+  font-family: var(--font-body);
+}
+[data-testid="stMainBlockContainer"] {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 2rem;
+}
+
+/* ---------- Hide Streamlit chrome: sidebar, header, menu, footer ---------- */
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"],
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stMainMenu"],
+[data-testid="stStatusWidget"],
+#MainMenu,
+footer {
+  display: none !important;
+}
+
+/* ---------- Hero ---------- */
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-pine-shadow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* small teal dot before every eyebrow label */
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-deep-teal);
+  flex: none;
+}
+.hero { text-align: center; padding: 1rem 0 2rem; }
+.hero .eyebrow { justify-content: center; }
+.hero-title {
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 3.75rem);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--color-charcoal-navy);
+  margin: 1rem auto 0.75rem;
+  max-width: 720px;
+}
+.hero-title .accent { color: var(--color-deep-teal); font-style: italic; }
+.hero-sub {
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--color-charcoal-navy);
+  opacity: 0.75;
+  max-width: 520px;
+  margin: 0 auto 1.25rem;
+}
+.hero-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Chips (small pills) ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: var(--radius-tags);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  color: var(--color-charcoal-navy);
+  white-space: nowrap;
+}
+.chip-foam  { background: var(--color-sea-foam); }
+.chip-sand  { background: var(--color-blush-sand); border-color: var(--color-dusty-rose); }
+.chip-mint  { background: var(--color-card-mint); border-color: var(--color-mint-mist); }
+/* Unassigned owner: dusty rose with dark ink text so it stays readable */
+.chip-rose  { background: var(--color-dusty-rose); color: var(--color-illustration-ink); font-weight: 600; }
+/* No deadline: quiet outline chip */
+.chip-muted { background: transparent; border-color: var(--color-mint-mist); color: var(--color-charcoal-navy); opacity: 0.8; }
+.chip-owner { background: var(--color-sea-foam); }
+.chip-date  { background: var(--color-paper-white); border-color: var(--color-mint-mist); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* ---------- Cards: flat surface, thin border, no shadow ---------- */
+[class*="st-key-card_"] {
+  background: var(--surface-card-mint);
+  border: 1px solid var(--color-mint-mist);
+  border-radius: var(--radius-cards);
+  padding: var(--card-padding);
+  box-shadow: none;
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0.5rem 0 0.75rem;
+  color: var(--color-charcoal-navy);
+}
+.card-text { line-height: 1.6; margin: 0.4rem 0 0; }
+.card-list { margin: 0.4rem 0 0; padding-left: 1.1rem; line-height: 1.55; }
+.card-list li { margin-bottom: 6px; }
+.card-list li::marker { color: var(--color-deep-teal); }
+.card-empty { opacity: 0.6; margin: 0.4rem 0 0; }
+
+/* ---------- Text and number inputs, dropdowns, upload box ---------- */
+/* White field, thin mint border, rounded corners (like the "card UI mockup" in the brief) */
+[data-testid="stTextInputRootElement"],
+[data-testid="stDateInputField"],
+[data-testid="stTextAreaRootElement"],
+[data-testid="stSelectbox"] div:has(> input) {
+  background: #ffffff;
+  border: 1px solid var(--color-mint-mist);
+  border-radius: 12px;
+}
+[data-testid="stTextInputRootElement"]:focus-within,
+[data-testid="stDateInputField"]:focus-within,
+[data-testid="stTextAreaRootElement"]:focus-within,
+[data-testid="stSelectbox"] div:has(> input):focus-within {
+  border-color: var(--color-deep-teal);
+}
+/* Small mono labels above widgets */
+[data-testid="stTextInput"] [data-testid="stWidgetLabel"] p,
+[data-testid="stDateInput"] [data-testid="stWidgetLabel"] p,
+[data-testid="stSelectbox"] [data-testid="stWidgetLabel"] p,
+[data-testid="stTextArea"] [data-testid="stWidgetLabel"] p,
+[data-testid="stFileUploader"] [data-testid="stWidgetLabel"] p,
+[data-testid="stAudioInput"] [data-testid="stWidgetLabel"] p {
+  font-family: var(--font-label);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-pine-shadow);
+}
+[data-testid="stFileUploaderDropzone"] {
+  background: #ffffff;
+  border: 1px dashed var(--color-sage);
+  border-radius: 12px;
+}
+[data-testid="stAudioInput"] > div {
+  background: #ffffff;
+  border: 1px solid var(--color-mint-mist);
+  border-radius: 12px;
+}
+
+/* ---------- Tabs ---------- */
+/* Streamlit 1.66 tabs are [data-testid="stTab"] (role="tab"); the Baseweb selectors are kept as a fallback */
+[role="tablist"] { gap: 4px; border-bottom: 1px solid var(--color-mint-mist); }
+[data-testid="stTab"],
+button[data-baseweb="tab"] {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--color-charcoal-navy);
+  background: transparent;
+  border-radius: 12px 12px 0 0;
+  padding: 8px 16px;
+}
+[data-testid="stTab"]:hover { background: var(--color-sea-foam); }
+[data-testid="stTab"] p { color: var(--color-charcoal-navy); font-weight: 500; }
+[data-testid="stTab"][aria-selected="true"] p,
+button[data-baseweb="tab"][aria-selected="true"] p { color: var(--color-deep-teal); font-weight: 600; }
+/* the moving underline under the selected tab */
+.react-aria-SelectionIndicator,
+[data-baseweb="tab-highlight"] { background: var(--color-deep-teal); height: 2px; }
+[data-baseweb="tab-border"] { background: var(--color-mint-mist); }
+
+/* ---------- Expanders ---------- */
+[data-testid="stExpander"] details {
+  background: var(--color-paper-white);
+  border: 1px solid var(--color-mint-mist);
+  border-radius: 12px;
+}
+[data-testid="stExpander"] summary { font-weight: 500; color: var(--color-pine-shadow); }
+[data-testid="stExpander"] summary:hover { color: var(--color-deep-teal); }
+
+/* ---------- Buttons ---------- */
+/* Primary: deep teal fill, white text, pill shape */
+[data-testid="stBaseButton-primary"] {
+  background: var(--color-deep-teal);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-buttons);
+  padding: 0.7rem 1.5rem;
+  font-weight: 500;
+}
+[data-testid="stBaseButton-primary"] p { color: #ffffff; font-size: 15px; }
+[data-testid="stBaseButton-primary"]:hover,
+[data-testid="stBaseButton-primary"]:active,
+[data-testid="stBaseButton-primary"]:focus-visible {
+  background: var(--color-forest-floor);
+  color: #ffffff;
+  border: none;
+}
+/* Secondary (download buttons): outlined ghost in the darker teal */
+[data-testid="stBaseButton-secondary"],
+[data-testid="stDownloadButton"] button {
+  background: transparent;
+  color: var(--color-pine-shadow);
+  border: 1px solid var(--color-pine-shadow);
+  border-radius: var(--radius-buttons);
+  padding: 0.6rem 1.25rem;
+  font-weight: 500;
+}
+[data-testid="stBaseButton-secondary"] p,
+[data-testid="stDownloadButton"] button p { color: var(--color-pine-shadow); }
+[data-testid="stBaseButton-secondary"]:hover,
+[data-testid="stDownloadButton"] button:hover {
+  background: var(--color-sea-foam);
+  border-color: var(--color-pine-shadow);
+  color: var(--color-pine-shadow);
+}
+
+/* ---------- Checkbox rows in the action list ---------- */
+[class*="st-key-card_"] .eyebrow { margin-bottom: 0.5rem; }
+[data-testid="stCheckbox"] label p { font-size: 15px; line-height: 1.45; }
+
+/* ---------- Alerts (st.error) ---------- */
+[data-testid="stAlert"] { border-radius: 12px; }
+
+/* ---------- Small text ---------- */
+.privacy-note { font-size: 12.5px; opacity: 0.65; margin: 0.75rem 0 0; text-align: center; }
+.footer {
+  font-size: 12px;
+  opacity: 0.55;
+  text-align: center;
+  margin-top: 2.5rem;
+  font-family: var(--font-label);
+  letter-spacing: 0.03em;
+}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 640px) {
+  [data-testid="stMainBlockContainer"] { padding: 1.5rem 0.9rem 1.5rem; }
+  [class*="st-key-card_"] { padding: 16px; }
+  .hero { padding-bottom: 1.25rem; }
+}

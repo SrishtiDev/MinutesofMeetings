@@ -1,0 +1,7 @@
+# Light theme using the colours from assets/tokens.css
+[theme]
+base = "light"
+primaryColor = "#1c5d5f"            # --color-deep-teal
+backgroundColor = "#f2f8f7"         # --color-paper-white
+secondaryBackgroundColor = "#e4f0f1" # --color-card-mint
+textColor = "#283338"               # --color-charcoal-navy
