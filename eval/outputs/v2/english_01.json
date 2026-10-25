@@ -1,0 +1,46 @@
+{
+  "title": "Sprint Planning and Client Demo Preparation",
+  "detected_language": "en",
+  "summary": "The team finalized the sprint plan ahead of next week's client demo, addressing a blocking issue with the notifications REST API. It was decided to deploy to staging on Friday to allow for weekend smoke testing. Specific owners and deadlines were assigned for API completion, frontend integration, bug fixes, documentation updates, and test planning.",
+  "key_points": [
+    "The notifications REST API is currently blocking frontend development due to delays in database migration.",
+    "A bug was identified where session tokens expire prematurely on iOS Safari, suspected to be a header configuration issue.",
+    "The team debated the timing of the staging deployment, weighing the safety of a Friday release against a Monday release.",
+    "API documentation in Confluence was noted to be outdated since the last sprint."
+  ],
+  "decisions": [
+    "Deploy to staging on Friday, October 23rd."
+  ],
+  "action_items": [
+    {
+      "task": "Complete notifications REST API",
+      "owner": "Meera",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Integrate frontend with notifications API",
+      "owner": "Siddharth",
+      "deadline": "2026-10-23"
+    },
+    {
+      "task": "Investigate and fix session token expiration bug on iOS Safari",
+      "owner": "Arjun",
+      "deadline": "2026-10-21"
+    },
+    {
+      "task": "Update API documentation in Confluence",
+      "owner": "Siddharth",
+      "deadline": "2026-10-30"
+    },
+    {
+      "task": "Write and share regression test plan",
+      "owner": "Kavya",
+      "deadline": "2026-10-21"
+    },
+    {
+      "task": "Send out meeting summary and updated sprint board",
+      "owner": "Rohan",
+      "deadline": "2026-10-21"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "title": "CampusConnect v1 Release Planning and Task Updates",
+  "detected_language": "mixed",
+  "summary": "The team reviewed the remaining tasks for the v1 release of the CampusConnect app. Divya committed to finalizing the user profile API by tomorrow, while Kabir plans to complete the profile page UI by next Friday. The team decided to defer the migration from SQLite to PostgreSQL to v2. A test plan deadline was set for next Wednesday, and the README update was deferred due to time constraints.",
+  "key_points": [
+    "The team discussed the status of the user profile API and the dependency of the frontend UI on the backend API.",
+    "Delays in design assets were attributed to the college fest, with a new deadline set for Figma uploads.",
+    "The team debated whether to migrate from SQLite to PostgreSQL for v1 or defer it to v2.",
+    "The current state of the testing plan was reviewed, with only the login module currently covered."
+  ],
+  "decisions": [
+    "Defer migration from SQLite to PostgreSQL to v2; v1 will continue using SQLite."
+  ],
+  "action_items": [
+    {
+      "task": "Finalize user profile API and fix session handling edge case",
+      "owner": "Divya",
+      "deadline": "2026-10-21"
+    },
+    {
+      "task": "Complete profile page UI",
+      "owner": "Kabir",
+      "deadline": "2026-10-30"
+    },
+    {
+      "task": "Upload new onboarding screen design assets to Figma",
+      "owner": "Sneha",
+      "deadline": "2026-10-22"
+    },
+    {
+      "task": "Complete test plan for all modules",
+      "owner": "Tanveer",
+      "deadline": "2026-10-28"
+    },
+    {
+      "task": "Update README file on GitHub",
+      "owner": null,
+      "deadline": null
+    }
+  ]
+}
