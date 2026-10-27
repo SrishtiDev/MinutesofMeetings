@@ -23,6 +23,7 @@ from openai import OpenAI, RateLimitError, APIStatusError
 from pydantic import ValidationError
 
 from models import Minutes
+from services.config import get_setting
 
 # ---------------------------------------------------------------------------
 # Paths and defaults
@@ -296,21 +297,15 @@ def extract_minutes(
         ExtractionError: If all retries fail.
         ValueError:      If no API key is set.
     """
-    load_dotenv()  # reads .env file; safe to call multiple times
-
     # API key: try LLM_API_KEY → GROQ_API_KEY → OPENAI_API_KEY
-    api_key = (
-        os.getenv("LLM_API_KEY")
-        or os.getenv("GROQ_API_KEY")
-        or os.getenv("OPENAI_API_KEY")
-    )
+    api_key = get_setting("LLM_API_KEY", "GROQ_API_KEY", "OPENAI_API_KEY")
     if not api_key or api_key.strip() in ("", "your-key-here", "your-groq-api-key-here"):
         raise ValueError(
             "No LLM API key found. Set GROQ_API_KEY in your .env file."
         )
 
-    base_url       = os.getenv("LLM_BASE_URL", _DEFAULT_BASE_URL)
-    resolved_model = model or os.getenv("LLM_MODEL", _DEFAULT_MODEL)
+    base_url       = get_setting("LLM_BASE_URL", default=_DEFAULT_BASE_URL)
+    resolved_model = model or get_setting("LLM_MODEL", default=_DEFAULT_MODEL)
     resolved_prompt = prompt_file or _DEFAULT_PROMPT
 
     _log(f"[extractor] Prompt file      : {resolved_prompt.name}")

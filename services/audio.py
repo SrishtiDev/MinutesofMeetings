@@ -26,13 +26,21 @@ class AudioError(Exception):
     pass
 
 
-def _check_ffmpeg() -> None:
-    """Make sure ffmpeg is installed. Raise AudioError if not."""
-    if shutil.which("ffmpeg") is None:
+def _ffmpeg_executable() -> str:
+    """Return system ffmpeg, or the binary bundled by imageio-ffmpeg."""
+    system_ffmpeg = shutil.which("ffmpeg")
+    if system_ffmpeg:
+        return system_ffmpeg
+
+    try:
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception as exc:
         raise AudioError(
-            "ffmpeg is not installed. Install it with:\n"
-            "  sudo apt install ffmpeg"
-        )
+            "Audio conversion requires ffmpeg. Add 'ffmpeg' to packages.txt "
+            "or reinstall the app dependencies."
+        ) from exc
 
 
 def _validate_file(audio_path: str) -> Path:
@@ -69,7 +77,7 @@ def prepare_audio(audio_path: str) -> tuple[list[str], str]:
     Raises:
         AudioError: If validation or ffmpeg conversion fails.
     """
-    _check_ffmpeg()
+    ffmpeg = _ffmpeg_executable()
     source = _validate_file(audio_path)
 
     # Create a temp directory to hold the converted file(s)
@@ -80,7 +88,7 @@ def prepare_audio(audio_path: str) -> tuple[list[str], str]:
     try:
         subprocess.run(
             [
-                "ffmpeg", "-y",          # overwrite without asking
+                ffmpeg, "-y",             # overwrite without asking
                 "-i", str(source),       # input file
                 "-ac", "1",              # mono (1 channel)
                 "-ar", "16000",          # 16 kHz sample rate
@@ -108,7 +116,7 @@ def prepare_audio(audio_path: str) -> tuple[list[str], str]:
     try:
         subprocess.run(
             [
-                "ffmpeg", "-y",
+                ffmpeg, "-y",
                 "-i", converted,
                 "-f", "segment",                    # segment muxer
                 "-segment_time", str(SEGMENT_SECONDS),  # 10 minutes each
