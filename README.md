@@ -19,7 +19,7 @@ Writing minutes of meeting (MoM) by hand is slow and often skipped. In India, me
 - 📝 Structured minutes: title, summary, key points, decisions, action items
 - ✅ Action items with `owner` and `deadline` (set to `null` when not stated, never guessed)
 - 📅 Relative dates like "kal" or "next Friday" resolved using the meeting date
-- 📄 Original transcript viewer and Markdown export
+- 📄 Original transcript viewer and PDF and Excel export
 - 🗂️ Meeting history stored in SQLite
 
 ## How it works
@@ -44,7 +44,7 @@ flowchart TD
     F --> G["Pydantic validation, retry on invalid JSON"]
     G --> H["Minutes: summary, decisions, action items"]
     H --> I["Streamlit result view"]
-    H --> J["Markdown export"]
+    H --> J["PDF and Excel export"]
     H --> K[("SQLite history")]
 ```
 
@@ -101,7 +101,7 @@ MinutesofMeetings/
 │   ├── transcriber.py      # Whisper API call
 │   ├── extractor.py        # prompt building, GPT call, validation, retry
 │   ├── pipeline.py         # orchestrates the steps
-│   └── exporter.py         # Markdown export
+│   └── exporter.py         # PDF and Excel export
 ├── prompts/                # versioned system prompts (v1, v2, ...)
 ├── eval/                   # labeled test cases and scoring script
 ├── data/                   # sample audio and transcripts
@@ -162,7 +162,7 @@ Open the URL shown in the terminal (usually `http://localhost:8501`).
 2. Enter the **meeting date** so relative dates can be resolved.
 3. Upload an audio file, or paste a transcript.
 4. Click **Generate Minutes**.
-5. Review the summary, decisions and action items, then export as Markdown.
+5. Review the summary, decisions and action items, then export as PDF or Excel.
 
 ## Evaluation
 
@@ -192,7 +192,7 @@ _Results will be filled in as the evaluation runs._
 - [ ] End-to-end pipeline
 - [ ] Evaluation script and baseline scores
 - [ ] Streamlit UI
-- [ ] Markdown export and SQLite history
+- [ ] PDF and Excel export and SQLite history
 - [ ] Demo video and deployment
 
 ## Limitations

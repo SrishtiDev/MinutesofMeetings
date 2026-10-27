@@ -8,7 +8,6 @@ keep (the generated minutes, checkbox ticks) lives in st.session_state.
 """
 
 import html
-import json
 import os
 import tempfile
 from datetime import date
@@ -18,7 +17,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from services.audio import AudioError, SUPPORTED_EXTENSIONS
-from services.exporter import to_markdown
+from services.exporter import to_excel, to_pdf
 from services.extractor import ExtractionError
 from services.pipeline import process_meeting
 from services.transcriber import TranscriptionError
@@ -197,20 +196,16 @@ def show_results() -> None:
         st.text(st.session_state.transcript)
 
     # Downloads: two outlined buttons
-    markdown = to_markdown(
-        minutes,
-        transcript=st.session_state.transcript,
-        meeting_date=st.session_state.result_date,
-    )
-    json_text = json.dumps(minutes.model_dump(), indent=2, ensure_ascii=False)
+    meeting_date = st.session_state.result_date
     col1, col2 = st.columns(2)
     col1.download_button(
-        "Download Markdown", markdown, file_name="minutes.md",
-        mime="text/markdown", icon=":material/download:", width="stretch",
+        "Download PDF", to_pdf(minutes, meeting_date), file_name="minutes.pdf",
+        mime="application/pdf", icon=":material/download:", width="stretch",
     )
     col2.download_button(
-        "Download JSON", json_text, file_name="minutes.json",
-        mime="application/json", icon=":material/download:", width="stretch",
+        "Download Excel", to_excel(minutes, meeting_date), file_name="minutes.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        icon=":material/download:", width="stretch",
     )
 
 

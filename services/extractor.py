@@ -32,7 +32,7 @@ from services.config import get_setting
 _PROJECT_ROOT = Path(__file__).parent.parent
 
 # Default prompt is v3; override with --prompt flag on the CLI.
-_DEFAULT_PROMPT = _PROJECT_ROOT / "prompts" / "system_v3.txt"
+_DEFAULT_PROMPT = _PROJECT_ROOT / "prompts" / "system_v4.txt"
 
 _DEFAULT_BASE_URL      = "https://api.groq.com/openai/v1"
 _DEFAULT_MODEL         = "openai/gpt-oss-120b"
@@ -378,6 +378,7 @@ def extract_minutes(
 
         try:
             minutes = Minutes.model_validate_json(raw_json)
+            minutes.action_items = merge_duplicate_actions(minutes.action_items)
             _log("[extractor] Validation successful.")
             return minutes
 
@@ -425,7 +426,7 @@ if __name__ == "__main__":
         "--prompt",
         default=None,
         metavar="FILE",
-        help="System prompt file. Default: prompts/system_v3.txt",
+        help="System prompt file. Default: prompts/system_v4.txt",
     )
 
     args = parser.parse_args()
