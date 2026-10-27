@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 from openai import OpenAI, RateLimitError, APIStatusError
 from pydantic import ValidationError
 
-from models import Minutes
+from models import Minutes, merge_duplicate_actions
 from services.config import get_setting
 
 # ---------------------------------------------------------------------------
