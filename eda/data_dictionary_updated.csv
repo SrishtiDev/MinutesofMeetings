@@ -1,0 +1,8 @@
+column_name,data_type,sample_value_1,sample_value_2,sample_value_3,nullable,description
+doc_id,string,D00001,D00002,D00003,No,"Unique document ID, format D followed by 5 digits (D00001...). Primary key."
+source,string,Source_12,Source_5,Source_5,No,Name/code of the publisher or origin of the document (20 sources: Source_1 to Source_20).
+topic_label,string (categorical),Health,Science,Business,No,"Topic category of the document: Business, Science, Politics, Technology, Sports, Health, Entertainment."
+word_count,integer,1120,1144,1577,No,Total number of words in the document (document length). Range in data: 107 to 2000.
+avg_sentence_length,float,26.9,17.5,15.5,No,Average number of words per sentence in the document. Range in data: 10.0 to 30.0.
+unique_words,integer,505,605,319,No,Number of distinct words in the document. Must be <= word_count.
+readability_score,float,49.8,50.2,33.5,No,Readability score of the document (higher = easier to read). Range in data: 30.0 to 79.9.
