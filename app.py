@@ -10,6 +10,7 @@ keep (the generated minutes, checkbox ticks) lives in st.session_state.
 import html
 import os
 import tempfile
+import traceback
 from datetime import date
 from pathlib import Path
 
@@ -106,11 +107,12 @@ def run_pipeline(audio_bytes: bytes | None, suffix: str, transcript_text: str | 
         # Missing API key and bad input both end up here
         st.error(f"Problem with your input or setup: {exc}", icon=":material/error:")
         return
-    except Exception:
-        # Anything unexpected: friendly message, no stack trace in the UI
+    except Exception as exc:
+        # Keep the full traceback in Streamlit Cloud logs and show the actual
+        # failure instead of hiding the cause behind a generic message.
+        traceback.print_exc()
         st.error(
-            "Something went wrong while generating the minutes. "
-            "Please try again; if it keeps happening, check the terminal logs.",
+            f"Unexpected error ({type(exc).__name__}): {exc}",
             icon=":material/error:",
         )
         return

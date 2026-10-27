@@ -10,7 +10,7 @@ import re
 import sys
 import time
 
-from openai import RateLimitError
+from openai import APIError, RateLimitError
 
 from services.client import get_client
 
@@ -169,6 +169,11 @@ def transcribe(
                     f"all {_RATE_LIMIT_MAX_TRIES} retries failed. "
                     f"Try again in a minute or two."
                 )
+
+            except APIError as exc:
+                raise TranscriptionError(
+                    f"Groq transcription request failed: {exc}"
+                ) from exc
 
     _log(f"[transcriber] Done. ~{total_seconds:.0f}s of audio processed.")
 

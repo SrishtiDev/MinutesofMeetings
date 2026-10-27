@@ -157,6 +157,9 @@ def _log(msg: str) -> None:
 def _log_token_usage(response) -> None:
     """Print token counts to stderr so we can track API cost."""
     u = response.usage
+    if u is None:
+        _log("[token usage] unavailable")
+        return
     _log(
         f"[token usage]  prompt={u.prompt_tokens} | "
         f"completion={u.completion_tokens} | total={u.total_tokens}"
@@ -365,7 +368,9 @@ def extract_minutes(
                     temperature=0,
                 )
             else:
-                raise
+                raise ExtractionError(
+                    f"Groq extraction request failed ({exc.status_code}): {exc}"
+                ) from exc
 
         _log_token_usage(response)
 
@@ -374,7 +379,12 @@ def extract_minutes(
         if actual_model != resolved_model:
             _log(f"[extractor] Response from fallback model: {actual_model}")
 
-        raw_json: str = response.choices[0].message.content
+        raw_json = response.choices[0].message.content
+        if not raw_json:
+            raise ExtractionError(
+                "The extraction model returned an empty response. "
+                "Try again or choose a different LLM_MODEL."
+            )
 
         try:
             minutes = Minutes.model_validate_json(raw_json)
