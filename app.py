@@ -11,6 +11,7 @@ import html
 import os
 import tempfile
 import traceback
+import urllib.parse
 from datetime import date
 from pathlib import Path
 
@@ -21,7 +22,9 @@ from services.audio import AudioError, SUPPORTED_EXTENSIONS
 from services.exporter import to_excel, to_pdf
 from services.extractor import ExtractionError
 from services.pipeline import process_meeting
+from services.tracker_formatter import format_tracker_rows, tracker_table_rows
 from services.transcriber import TranscriptionError
+from services.whatsapp_formatter import format_whatsapp
 
 load_dotenv()
 
@@ -194,11 +197,59 @@ def show_results() -> None:
                 f'<div class="chip-row">{owner_chip}{deadline_chip}</div>', unsafe_allow_html=True
             )
 
+    meeting_date = st.session_state.result_date
+
+    # Share: copy-ready text for WhatsApp and for the tracker sheet
+    eyebrow("Share")
+    tab_whatsapp, tab_tracker = st.tabs(["WhatsApp", "Tracker"])
+    with tab_whatsapp:
+        whatsapp_text = format_whatsapp(minutes, meeting_date)
+        st.code(whatsapp_text, language=None)  # the code box has a built-in copy icon
+        st.link_button(
+            "Open in WhatsApp",
+            "https://wa.me/?text=" + urllib.parse.quote(whatsapp_text),
+            icon=":material/open_in_new:",
+        )
+    with tab_tracker:
+        submitted_by = st.text_input("Submitted by", value="Srishti")
+
+        # Owner dropdown: the two team members plus every owner found in the minutes,
+        # so a name from the transcript is never lost
+        owner_options = ["Srishti", "Shashwat"]
+        for item in minutes.action_items:
+            if item.owner and item.owner not in owner_options:
+                owner_options.append(item.owner)
+
+        start_rows = tracker_table_rows(minutes)
+        # The key changes when the minutes change, so a new result starts a fresh table
+        table_key = "tracker_" + str(hash(tuple(row["Area"] for row in start_rows)))
+        edited = st.data_editor(
+            start_rows,
+            key=table_key,
+            hide_index=True,
+            num_rows="fixed",
+            column_config={
+                "Area": st.column_config.TextColumn("Area"),
+                "Account": st.column_config.SelectboxColumn(
+                    "Account", options=["Teacher", "Student", "Admin", "All"]
+                ),
+                "Status": st.column_config.SelectboxColumn(
+                    "Status", options=["Open", "In progress", "Fixed", "Shipped"], default="Open"
+                ),
+                "Owner": st.column_config.SelectboxColumn("Owner", options=owner_options),
+                "Due Date": st.column_config.TextColumn("Due Date"),
+            },
+        )
+        # data_editor returns the table AFTER the user's edits; build the text from that
+        # (given a list, it returns a list; given a DataFrame it would return one)
+        edited_rows = edited if isinstance(edited, list) else edited.to_dict("records")
+        st.code(format_tracker_rows(edited_rows, submitted_by, meeting_date), language=None)
+        st.caption("Paste into the first empty row of the AI AGENT sheet, then pick the Account.")
+
     with st.expander("Original transcript"):
         st.text(st.session_state.transcript)
 
-    # Downloads: two outlined buttons
-    meeting_date = st.session_state.result_date
+    # Downloads: two buttons side by side
     col1, col2 = st.columns(2)
     col1.download_button(
         "Download PDF", to_pdf(minutes, meeting_date), file_name="minutes.pdf",
@@ -252,7 +303,7 @@ with st.container(key="card_input"):
         glossary = st.text_input(
             "Names and technical terms, comma separated",
             placeholder="Arjun, Priya, CampusConnect",
-            help="Helps speech recognition spell names correctly. Used for audio only.",
+            help="Helps spell names and technical terms correctly in the transcript and the minutes.",
         )
 
     # on_change="rerun" lets us ask each tab "are you the selected one?" (.open)
