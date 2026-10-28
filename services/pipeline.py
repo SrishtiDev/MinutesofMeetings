@@ -104,6 +104,7 @@ def process_meeting(
         transcript=transcript_text,
         meeting_date=meeting_date,
         output_language=output_language,
+        glossary=glossary,
     )
 
     return minutes, transcript_text

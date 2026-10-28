@@ -135,15 +135,19 @@ def _build_user_message(
     transcript: str,
     meeting_date: str,
     output_language: str,
+    glossary: str | None = None,
 ) -> str:
     """
     Compose the full user-turn message sent to the model.
     Includes the DATE REFERENCE block so the model never calculates dates.
     """
     date_ref = build_date_reference(meeting_date)
+    # Optional spelling reference for names and technical terms
+    glossary_block = f"GLOSSARY (spelling reference): {glossary}\n\n" if glossary else ""
     return (
         f"meeting_date: {meeting_date}\n"
         f"output_language: {output_language}\n\n"
+        f"{glossary_block}"
         f"{date_ref}\n\n"
         f"Transcript:\n---\n{transcript}\n---"
     )
@@ -282,6 +286,7 @@ def extract_minutes(
     output_language: str = "English",
     model: str | None = None,
     prompt_file: Path | None = None,
+    glossary: str | None = None,
 ) -> Minutes:
     """
     Send the transcript to an OpenAI-compatible LLM and return a Minutes object.
@@ -292,6 +297,7 @@ def extract_minutes(
         output_language: Language for output fields. Default "English".
         model:           Override the LLM model name (else uses LLM_MODEL env var).
         prompt_file:     Override the system prompt file (else uses _DEFAULT_PROMPT).
+        glossary:        Optional comma-separated names/terms, used as spelling references.
 
     Returns:
         Validated Minutes instance.
@@ -318,7 +324,7 @@ def extract_minutes(
     client = OpenAI(api_key=api_key, base_url=base_url)
 
     system_prompt = _load_system_prompt(resolved_prompt)
-    user_message  = _build_user_message(transcript, meeting_date, output_language)
+    user_message  = _build_user_message(transcript, meeting_date, output_language, glossary)
 
     # The conversation history we send to the model.
     messages: list[dict] = [

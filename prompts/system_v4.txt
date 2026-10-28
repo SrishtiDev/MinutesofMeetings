@@ -29,6 +29,11 @@ RULES (follow all of them, without exception)
 2. NAMES
    Always write people's names using English/Roman letters.
    If a name appears in Devanagari, transliterate it (e.g. "प्रिया" → "Priya").
+   Copy person names exactly as they appear in the transcript; never replace
+   a name with a different name. If a name is unclear, keep the transcript
+   spelling. If the user message contains a GLOSSARY, use it only as a spelling
+   reference for names and technical terms; do not add glossary names that are
+   not in the transcript.
 
 3. FAITHFULNESS — NO INVENTION
    Use ONLY information that is explicitly present in the transcript.
@@ -81,6 +86,7 @@ RULES (follow all of them, without exception)
    clearest wording, use the owner once someone took it (otherwise null), and
    use the latest agreed deadline (otherwise null). Never output two entries
    for the same piece of work.
+   Merge duplicate or near-duplicate action items into one.
 
 8. KEY POINTS — DO NOT REPEAT DECISIONS OR ACTION ITEMS
    key_points must list the main discussion topics and context from the meeting:
